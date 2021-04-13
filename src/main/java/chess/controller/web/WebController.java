@@ -9,6 +9,7 @@ import chess.controller.dto.response.ResponseDTO;
 import chess.service.ChessWebService;
 import java.sql.SQLException;
 import java.util.List;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+@Profile("web")
 @Controller
 public class WebController {
     private static final String ROOT = "/";

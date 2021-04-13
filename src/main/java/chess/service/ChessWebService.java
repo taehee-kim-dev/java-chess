@@ -11,8 +11,10 @@ import chess.domain.board.setting.BoardSetting;
 import chess.domain.game.ChessGame;
 import java.sql.SQLException;
 import java.util.List;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
+@Profile("web")
 @Service
 public class ChessWebService {
     private static final int FILES_SIZE_IN_ONE_RANK = 8;
