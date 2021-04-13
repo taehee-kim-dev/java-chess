@@ -5,6 +5,7 @@ import chess.dao.entity.PiecePositionEntity;
 import chess.domain.piece.Piece;
 import chess.domain.position.PiecePosition;
 import chess.domain.position.Position;
+import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,7 +24,7 @@ public class PlayerPiecePositionDAO implements PlayerPiecePositionRepository {
     @Override
     public void save(Long playerId, PiecePosition piecePosition) {
         String query = "INSERT INTO player_piece_position (player_id, piece_id, position_id) VALUES (?, ?, ?)";
-        jdbcTemplate.update(query, piecePosition.getPieceId(), piecePosition.getPositionId());
+        jdbcTemplate.update(query, playerId, piecePosition.getPieceId(), piecePosition.getPositionId());
     }
 
     @Override
@@ -37,8 +38,8 @@ public class PlayerPiecePositionDAO implements PlayerPiecePositionRepository {
         List<Map<String, Object>> maps = jdbcTemplate.queryForList(query, gameId);
         Map<Position, Piece> results = new HashMap<>();
         for (Map<String, Object> gameMap : maps) {
-            Piece piece = Piece.of((Long) gameMap.get("piece_id"));
-            Position position = Position.of((Long) gameMap.get("position_id"));
+            Piece piece = Piece.of(((BigInteger)gameMap.get("piece_id")).longValue());
+            Position position = Position.of(((BigInteger)gameMap.get("position_id")).longValue());
             results.put(position, piece);
         }
         return results;
