@@ -2,7 +2,6 @@ package chess.domain.position;
 
 import chess.dao.entity.GamePiecePositionEntity;
 import chess.dao.entity.PiecePositionEntity;
-import chess.dao.playerpieceposition.PlayerPiecePositionDAO;
 import chess.dao.playerpieceposition.PlayerPiecePositionRepository;
 import chess.domain.board.Cell;
 import chess.domain.piece.Piece;
@@ -13,12 +12,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.springframework.stereotype.Component;
 
+@Component
 public class PiecesPositions {
     private final PlayerPiecePositionRepository playerPiecePositionRepository;
 
-    public PiecesPositions() {
-        playerPiecePositionRepository = new PlayerPiecePositionDAO();
+    public PiecesPositions(PlayerPiecePositionRepository playerPiecePositionRepository) {
+        this.playerPiecePositionRepository = playerPiecePositionRepository;
     }
 
     public void save(Long playerId, PiecePosition piecePosition) throws SQLException {

@@ -9,7 +9,9 @@ import chess.domain.position.type.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import org.springframework.stereotype.Component;
 
+@Component
 public class ScoreCalculator {
     private static final int MIN_COUNT_FOR_PAWN_HALF_SCORE = 2;
 

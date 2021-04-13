@@ -22,7 +22,7 @@ public class PlayerDAO implements PlayerRepository {
     }
 
     @Override
-    public Long findIdByGameIdAndTeamColor(Long gameId, TeamColor teamColor) throws SQLException {
+    public Long findIdByGameIdAndTeamColor(Long gameId, TeamColor teamColor) {
         String query = "SELECT id FROM player WHERE chess_game_id = ? AND team_color = ?";
         return jdbcTemplate.queryForObject(
             query,
@@ -32,7 +32,7 @@ public class PlayerDAO implements PlayerRepository {
     }
 
     @Override
-    public void removeAllByChessGame(Long gameId) throws SQLException {
+    public void removeAllByChessGame(Long gameId) {
         String query = "DELETE FROM player WHERE chess_game_id = ?";
         jdbcTemplate.update(query, gameId);
     }

@@ -7,14 +7,16 @@ import chess.domain.player.score.ScoreCalculator;
 import chess.domain.player.type.TeamColor;
 import java.sql.SQLException;
 import java.util.List;
+import org.springframework.stereotype.Component;
 
+@Component
 public class Players {
     private final PlayerRepository playerRepository;
     private final ScoreCalculator scoreCalculator;
 
-    public Players() {
-        playerRepository = new PlayerDAO();
-        scoreCalculator = new ScoreCalculator();
+    public Players(PlayerRepository playerRepository, ScoreCalculator scoreCalculator) {
+        this.playerRepository = playerRepository;
+        this.scoreCalculator = scoreCalculator;
     }
 
     public void createAndSaveNewPlayers(Long gameId) throws SQLException {

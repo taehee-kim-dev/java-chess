@@ -17,14 +17,16 @@ import chess.domain.position.cache.PositionsCache;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
+import org.springframework.stereotype.Component;
 
+@Component
 public class PlayersPieces {
     private final Players players;
     private final PiecesPositions piecesPositions;
 
-    public PlayersPieces() {
-        this.players = new Players();
-        this.piecesPositions = new PiecesPositions();
+    public PlayersPieces(Players players, PiecesPositions piecesPositions) {
+        this.players = players;
+        this.piecesPositions = piecesPositions;
     }
 
     public void createAndSaveNewPlayers(Long gameId) throws SQLException {

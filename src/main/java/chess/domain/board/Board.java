@@ -25,9 +25,9 @@ public class Board {
     private final PlayersPieces playersPieces;
     private final MoveChecker moveChecker;
 
-    public Board() {
-        playersPieces = new PlayersPieces();
-        moveChecker = new MoveChecker();
+    public Board(PlayersPieces playersPieces, MoveChecker moveChecker) {
+        this.playersPieces = playersPieces;
+        this.moveChecker = moveChecker;
     }
 
     public void createAndSaveNewPlayersAndPiecesPositionsOfGame(Long gameId, BoardSetting boardSetting) throws SQLException {
