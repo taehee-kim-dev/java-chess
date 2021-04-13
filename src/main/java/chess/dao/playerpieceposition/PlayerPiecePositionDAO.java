@@ -9,6 +9,7 @@ import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -71,12 +72,16 @@ public class PlayerPiecePositionDAO implements PlayerPiecePositionRepository {
             + "AS players "
             + "ON player_piece_position.player_id = players.player_id "
             + "WHERE player_piece_position.position_id = ?;";
-        return jdbcTemplate.queryForObject(
-            query,
-            (resultSet, rowNum) -> new GamePiecePositionEntity(
-                resultSet.getLong("id"),
-                resultSet.getLong("position_id")),
-            gameId, positionId);
+        try {
+            return jdbcTemplate.queryForObject(
+                query,
+                (resultSet, rowNum) -> new GamePiecePositionEntity(
+                    resultSet.getLong("id"),
+                    resultSet.getLong("position_id")),
+                gameId, positionId);
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
     }
 
     @Override
