@@ -9,7 +9,9 @@ import chess.domain.position.type.File;
 import chess.domain.position.type.Rank;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
 
+@SpringBootTest
 class PositionsCacheTest {
     @DisplayName("데이터베이스로부터 체스 칸 위치 캐싱")
     @Test
@@ -32,6 +34,7 @@ class PositionsCacheTest {
 
         assertThat(position).isEqualTo(new Position(A, THREE));
     }
+
 
     @DisplayName("유효하지 않은 위치")
     @Test
