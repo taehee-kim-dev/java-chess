@@ -1,81 +1,85 @@
 package chess.dao.game;
 
 
-import chess.dao.SQLQuery;
 import chess.dao.entity.ChessGameEntity;
 import chess.dao.entity.GameStatusEntity;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
+import java.sql.PreparedStatement;
 import java.util.List;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public class ChessGameDAO implements ChessGameRepository {
 
+    private final JdbcTemplate jdbcTemplate;
+
+    public ChessGameDAO(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
+
+    private final RowMapper<ChessGameEntity> ChessGameEntityRowMapper = (resultSet, rowNum) ->
+        new ChessGameEntity(
+        resultSet.getLong("id"),
+        resultSet.getString("title"),
+        resultSet.getString("current_turn_team_color")
+    );
+
     @Override
-    public ChessGameEntity save(ChessGameEntity chessRoomEntity) throws SQLException {
+    public ChessGameEntity save(ChessGameEntity chessRoomEntity) {
         String query = "INSERT INTO chess_game (title, current_turn_team_color) VALUES (?, ?)";
-        Long id = SQLQuery.insert(query, chessRoomEntity.getTitle(), chessRoomEntity.getCurrentTurnTeamColor().getValue());
-        chessRoomEntity.setId(id);
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        jdbcTemplate.update(connection -> {
+            PreparedStatement ps = connection.prepareStatement(query, new String[]{"id"});
+            ps.setString(1, chessRoomEntity.getTitle());
+            ps.setString(2, chessRoomEntity.getCurrentTurnTeamColor().getValue());
+            return ps;
+        }, keyHolder);
+        chessRoomEntity.setId(keyHolder.getKey().longValue());
         return chessRoomEntity;
     }
 
     @Override
-    public ChessGameEntity findById(Long id) throws SQLException {
+    public ChessGameEntity findById(Long id) {
         String query = "SELECT * FROM chess_game WHERE id = ?";
-        ResultSet resultSet = SQLQuery.select(query, id);
-        if (!resultSet.next()) {
-            return null;
-        }
-        return new ChessGameEntity(
-            resultSet.getLong("id"),
-            resultSet.getString("title"),
-            resultSet.getString("current_turn_team_color"));
+        return jdbcTemplate.queryForObject(query, ChessGameEntityRowMapper, id);
     }
 
     @Override
-    public List<ChessGameEntity> findAll() throws SQLException {
+    public List<ChessGameEntity> findAll() {
         String query = "SELECT * FROM chess_game";
-        ResultSet resultSet = SQLQuery.select(query);
-        List<ChessGameEntity> results = new ArrayList<>();
-        while (resultSet.next()) {
-            results.add(new ChessGameEntity(
-                resultSet.getLong("id"),
-                resultSet.getString("title"),
-                resultSet.getString("current_turn_team_color")));
-        }
-        return results;
+        return jdbcTemplate.query(query, ChessGameEntityRowMapper);
     }
 
     @Override
-    public GameStatusEntity findStatusByGameId(Long gameId) throws SQLException {
+    public GameStatusEntity findStatusByGameId(Long gameId) {
         String query = "SELECT * FROM chess_game WHERE id = ?";
-        ResultSet resultSet = SQLQuery.select(query, gameId);
-        if (!resultSet.next()) {
-            return null;
-        }
-        return new GameStatusEntity(
-            resultSet.getString("title"),
-            resultSet.getString("current_turn_team_color"));
+        return jdbcTemplate.queryForObject(
+            query,
+            (resultSet, rowNum) ->
+                new GameStatusEntity(
+                resultSet.getString("title"),
+                resultSet.getString("current_turn_team_color")), gameId);
     }
 
     @Override
-    public ChessGameEntity updateCurrentTurnTeamColor(ChessGameEntity chessGameEntity) throws SQLException {
+    public ChessGameEntity updateCurrentTurnTeamColor(ChessGameEntity chessGameEntity) {
         String query = "UPDATE chess_game SET current_turn_team_color = ? WHERE id = ?";
-        SQLQuery.updateOrRemove(query, chessGameEntity.getCurrentTurnTeamColor().getValue(), chessGameEntity.getId());
+        jdbcTemplate.update(query, chessGameEntity.getCurrentTurnTeamColor().getValue(), chessGameEntity.getId());
         return chessGameEntity;
     }
 
     @Override
-    public void remove(Long gameId) throws SQLException {
+    public void remove(Long gameId) {
         String query = "DELETE FROM chess_game WHERE id = ?";
-        SQLQuery.updateOrRemove(query, gameId);
+        jdbcTemplate.update(query, gameId);
     }
 
     @Override
-    public void removeAll() throws SQLException {
+    public void removeAll() {
         String query = "DELETE FROM chess_game";
-        SQLQuery.updateOrRemove(query);
+        jdbcTemplate.update(query);
     }
 }
