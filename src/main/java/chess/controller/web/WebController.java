@@ -58,43 +58,29 @@ public class WebController {
         return "index";
     }
 
-    private void handleHomeRequest() {
-        get(ROOT, (req, res) -> {
-            List<ChessGameResponseDTO> allRoomsIdAndTitle = chessWebService.getAllRoomsIdAndTitle();
-            Map<String, Object> model = new HashMap<>();
-            model.put("allChessGameRooms", allRoomsIdAndTitle);
-            return render(model, HOME_VIEW);
-        });
+    @PostMapping(ROOT + CREATE_CHESS_ROOM)
+    public String createChessRoomRequest(@RequestParam("room-title") String roomTitle) throws SQLException {
+        Long createdChessGameId = chessWebService.createNewChessGame(roomTitle);
+        return "redirect:" + ROOT + CHESS_BOARD + "?id=" + createdChessGameId;
     }
 
-    private void handleCreateChessRoomRequest() {
-        post(ROOT + CREATE_CHESS_ROOM, (req, res) -> {
-            Long createdChessGameId = chessWebService.createNewChessGame(req.queryParams("room-title"));
-            res.redirect(ROOT + CHESS_BOARD + "?id=" + createdChessGameId);
-            return null;
-        });
+    @GetMapping(ROOT + CHESS_BOARD)
+    public String getChessBoardRequest(@RequestParam("id") Long gameId, Model model) throws SQLException {
+        ResponseDTO responseDTO = chessWebService.getGameStatus(gameId);
+        model.addAttribute(RESPONSE_DTO, responseDTO);
+        putBoardRanksToModelV2(model, responseDTO.getBoardResponseDTO());
+        return CHESS_BOARD_VIEW;
     }
 
-    private void handleGetChessBoardRequest() {
-        get(ROOT + CHESS_BOARD, (req, res) -> {
-            Long gameId = Long.valueOf(req.queryParams("id"));
-            ResponseDTO responseDTO = chessWebService.getGameStatus(gameId);
-            Map<String, Object> model = new HashMap<>();
-            model.put(RESPONSE_DTO, responseDTO);
-            putBoardRanksToModel(model, responseDTO.getBoardResponseDTO());
-            return render(model, CHESS_BOARD_VIEW);
-        });
-    }
-
-    private void putBoardRanksToModel(Map<String, Object> model, BoardResponseDTO boardResponseDTO) {
-        model.put("rank8", boardResponseDTO.getRank8());
-        model.put("rank7", boardResponseDTO.getRank7());
-        model.put("rank6", boardResponseDTO.getRank6());
-        model.put("rank5", boardResponseDTO.getRank5());
-        model.put("rank4", boardResponseDTO.getRank4());
-        model.put("rank3", boardResponseDTO.getRank3());
-        model.put("rank2", boardResponseDTO.getRank2());
-        model.put("rank1", boardResponseDTO.getRank1());
+    private void putBoardRanksToModelV2(Model model, BoardResponseDTO boardResponseDTO) {
+        model.addAttribute("rank8", boardResponseDTO.getRank8());
+        model.addAttribute("rank7", boardResponseDTO.getRank7());
+        model.addAttribute("rank6", boardResponseDTO.getRank6());
+        model.addAttribute("rank5", boardResponseDTO.getRank5());
+        model.addAttribute("rank4", boardResponseDTO.getRank4());
+        model.addAttribute("rank3", boardResponseDTO.getRank3());
+        model.addAttribute("rank2", boardResponseDTO.getRank2());
+        model.addAttribute("rank1", boardResponseDTO.getRank1());
     }
 
     private void handleMoveRequest() {
