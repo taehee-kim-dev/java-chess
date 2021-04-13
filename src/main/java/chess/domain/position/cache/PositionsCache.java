@@ -1,6 +1,5 @@
 package chess.domain.position.cache;
 
-import chess.dao.position.PositionDAO;
 import chess.dao.position.PositionRepository;
 import chess.domain.position.Position;
 import chess.domain.position.type.File;
@@ -11,23 +10,29 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.annotation.PostConstruct;
+import org.springframework.stereotype.Component;
 
+@Component
 public class PositionsCache {
-    private static final PositionRepository POSITION_DAO = new PositionDAO();
+    private final PositionRepository positionRepository;
     private static final List<Position> POSITIONS = new ArrayList<>();
 
-    private PositionsCache() {
+    private PositionsCache(PositionRepository positionRepository) {
+        this.positionRepository = positionRepository;
     }
 
-    static {
+    @PostConstruct
+    private void init() {
         try {
             cachePositions();
+            System.out.println("test");
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    private static void cachePositions() throws SQLException {
+    private void cachePositions() throws SQLException {
         List<Rank> ranks = Arrays.asList(Rank.values());
         List<Rank> reversedRanks = ranks.stream()
             .sorted(Comparator.reverseOrder())
@@ -38,9 +43,9 @@ public class PositionsCache {
         }
     }
 
-    private static void cachingPositionsOfRank(Rank rank) throws SQLException {
+    private void cachingPositionsOfRank(Rank rank) throws SQLException {
         for (File file : File.values()) {
-            Position position = POSITION_DAO.findByFileAndRank(file, rank);
+            Position position = positionRepository.findByFileAndRank(file, rank);
             POSITIONS.add(position);
         }
     }
