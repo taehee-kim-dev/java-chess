@@ -2,7 +2,9 @@ package chess.dao.player;
 
 import chess.domain.player.type.TeamColor;
 import java.sql.SQLException;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface PlayerRepository {
     void save(TeamColor[] teamColors, Long gameId) throws SQLException;
 

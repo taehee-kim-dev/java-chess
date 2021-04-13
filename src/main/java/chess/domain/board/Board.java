@@ -16,7 +16,9 @@ import chess.domain.position.Position;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
+import org.springframework.stereotype.Component;
 
+@Component
 public class Board {
     private static final int NUMBER_OF_ALL_KINGS = 2;
 

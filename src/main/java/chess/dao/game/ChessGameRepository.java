@@ -4,7 +4,9 @@ import chess.dao.entity.ChessGameEntity;
 import chess.dao.entity.GameStatusEntity;
 import java.sql.SQLException;
 import java.util.List;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface ChessGameRepository {
     ChessGameEntity save(ChessGameEntity chessRoomEntity) throws SQLException;
 

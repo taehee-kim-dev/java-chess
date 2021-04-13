@@ -3,6 +3,7 @@ package chess.domain.board.setting;
 import chess.domain.piece.type.PieceWithColorType;
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.stereotype.Component;
 
 public abstract class BoardSetting {
     private static final int ALL_CELLS_SIZE = 64;

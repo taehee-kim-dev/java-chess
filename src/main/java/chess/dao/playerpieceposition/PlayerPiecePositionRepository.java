@@ -8,7 +8,9 @@ import chess.domain.position.Position;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface PlayerPiecePositionRepository {
     void save(Long playerId, PiecePosition piecePosition) throws SQLException;
 

@@ -12,12 +12,17 @@ import chess.controller.dto.response.MoveResponseDTO;
 import chess.controller.dto.response.ResponseDTO;
 import chess.service.ChessWebService;
 import com.google.gson.Gson;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
+@Controller
 public class WebController {
     private static final String ROOT = "/";
     private static final String CREATE_CHESS_ROOM = "rooms";
@@ -44,6 +49,13 @@ public class WebController {
         handleGetChessBoardRequest();
         handleMoveRequest();
         handleDeleteRequest();
+    }
+
+    @GetMapping(ROOT)
+    public String home(Model model) throws SQLException {
+        List<ChessGameResponseDTO> allRoomsIdAndTitle = chessWebService.getAllRoomsIdAndTitle();
+        model.addAttribute("allChessGameRooms", allRoomsIdAndTitle);
+        return "index";
     }
 
     private void handleHomeRequest() {

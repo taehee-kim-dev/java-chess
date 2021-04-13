@@ -18,14 +18,21 @@ import chess.domain.player.type.TeamColor;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.stereotype.Component;
 
+@Component
 public class ChessGame {
-    private final ChessGameRepository chessGameRepository;
     private final Board board;
+    private final ChessGameRepository chessGameRepository;
 
     public ChessGame() {
         board = new Board();
         chessGameRepository = new ChessGameDAO();
+    }
+
+    public ChessGame(Board board, ChessGameRepository chessGameRepository) {
+        this.board = board;
+        this.chessGameRepository = chessGameRepository;
     }
 
     public Long createNew(BoardSetting boardSetting, String title) throws SQLException {

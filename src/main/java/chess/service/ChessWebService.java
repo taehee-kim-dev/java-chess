@@ -11,7 +11,9 @@ import chess.domain.board.setting.BoardSetting;
 import chess.domain.game.ChessGame;
 import java.sql.SQLException;
 import java.util.List;
+import org.springframework.stereotype.Service;
 
+@Service
 public class ChessWebService {
     private static final int FILES_SIZE_IN_ONE_RANK = 8;
     private static final int BOARD_ALL_CELLS_SIZE = 64;
@@ -24,12 +26,12 @@ public class ChessWebService {
     private static final int RANK7_FIRST_INDEX = RANK6_FIRST_INDEX + FILES_SIZE_IN_ONE_RANK;
     private static final int RANK8_FIRST_INDEX = RANK7_FIRST_INDEX + FILES_SIZE_IN_ONE_RANK;
 
-    private final BoardSetting boardSetting;
     private final ChessGame chessGame;
+    private final BoardSetting boardSetting;
 
-    public ChessWebService(BoardSetting boardSetting) {
+    public ChessWebService(ChessGame chessGame, BoardSetting boardSetting) {
+        this.chessGame = chessGame;
         this.boardSetting = boardSetting;
-        chessGame = new ChessGame();
     }
 
     public Long createNewChessGame(String title) throws SQLException {
