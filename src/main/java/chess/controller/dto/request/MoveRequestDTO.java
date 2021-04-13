@@ -3,8 +3,11 @@ package chess.controller.dto.request;
 
 public class MoveRequestDTO {
     private Long gameId;
-    private final String startPosition;
-    private final String destination;
+    private String startPosition;
+    private String destination;
+
+    public MoveRequestDTO() {
+    }
 
     public MoveRequestDTO(Long gameId, String startPosition, String destination) {
         this.gameId = gameId;

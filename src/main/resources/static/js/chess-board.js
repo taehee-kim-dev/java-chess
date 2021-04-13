@@ -121,7 +121,7 @@ function request_move_post() {
   is_start_position_clicked = false;
   xhr.onload = function () {
     const move_response = xhr.response;
-    if (move_response['isMoveError']) {
+    if (move_response['moveError']) {
       alert(move_response['errorMessage']);
       return;
     }
