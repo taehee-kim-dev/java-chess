@@ -9,7 +9,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class PlayerDAO implements PlayerRepository {
-
     private final JdbcTemplate jdbcTemplate;
 
     public PlayerDAO(JdbcTemplate jdbcTemplate) {

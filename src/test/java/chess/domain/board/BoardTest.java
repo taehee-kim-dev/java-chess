@@ -21,12 +21,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 class BoardTest {
     private Long gameId;
-
-    @Autowired
-    private DBCleaner dbCleaner;
-
     @Autowired
     private ChessGame chessGame;
+    @Autowired
+    private DBCleaner dbCleaner;
 
     @BeforeEach
     void setUp() throws SQLException {

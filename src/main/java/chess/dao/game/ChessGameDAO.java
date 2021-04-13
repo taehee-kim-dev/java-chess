@@ -13,7 +13,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class ChessGameDAO implements ChessGameRepository {
-
     private final JdbcTemplate jdbcTemplate;
 
     public ChessGameDAO(JdbcTemplate jdbcTemplate) {

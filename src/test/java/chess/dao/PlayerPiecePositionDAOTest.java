@@ -55,7 +55,6 @@ class PlayerPiecePositionDAOTest {
     private Long whitePlayerIdOfGame1;
     private Long whitePlayerIdOfGame2;
     private Long blackPlayerIdOfGame2;
-
     @Autowired
     private ChessGameRepository chessGameRepository;
     @Autowired

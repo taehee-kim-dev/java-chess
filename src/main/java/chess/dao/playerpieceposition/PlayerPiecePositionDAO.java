@@ -15,7 +15,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class PlayerPiecePositionDAO implements PlayerPiecePositionRepository {
-
     private final JdbcTemplate jdbcTemplate;
 
     public PlayerPiecePositionDAO(JdbcTemplate jdbcTemplate) {

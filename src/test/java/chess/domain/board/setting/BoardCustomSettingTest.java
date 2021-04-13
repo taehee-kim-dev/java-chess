@@ -27,12 +27,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
 class BoardCustomSettingTest {
-
-    @Autowired
-    private DBCleaner dbCleaner;
-
     @Autowired
     private ChessGame chessGame;
+    @Autowired
+    private DBCleaner dbCleaner;
 
     @AfterEach
     void tearDown() throws SQLException {

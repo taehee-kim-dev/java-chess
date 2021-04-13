@@ -19,7 +19,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
 class PlayerDAOTest {
-
     @Autowired
     private PlayerRepository playerRepository;
     @Autowired

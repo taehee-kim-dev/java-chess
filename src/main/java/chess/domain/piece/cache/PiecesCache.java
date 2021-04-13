@@ -20,9 +20,10 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class PiecesCache {
-    private final PieceRepository pieceRepository;
     private static final List<Piece> PIECES = new ArrayList<>();
     private static final String PIECE_NOT_FOUND_ERROR_MESSAGE = "존재하지 않는 기물입니다.";
+
+    private final PieceRepository pieceRepository;
 
     private PiecesCache(PieceRepository pieceRepository) {
         this.pieceRepository = pieceRepository;

@@ -15,8 +15,9 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class PositionsCache {
-    private final PositionRepository positionRepository;
     private static final List<Position> POSITIONS = new ArrayList<>();
+
+    private final PositionRepository positionRepository;
 
     private PositionsCache(PositionRepository positionRepository) {
         this.positionRepository = positionRepository;

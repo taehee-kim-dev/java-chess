@@ -14,7 +14,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
 class PieceDAOTest {
-
     @Autowired
     private PieceRepository pieceRepository;
 

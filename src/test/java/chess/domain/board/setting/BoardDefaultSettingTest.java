@@ -22,10 +22,8 @@ class BoardDefaultSettingTest {
     private List<String> cellsStatus;
     private List<String> blackPiecesExceptPawns;
     private List<String> whitePiecesExceptPawns;
-
     @Autowired
     private DBCleaner dbCleaner;
-
     @Autowired
     private ChessGame chessGame;
 

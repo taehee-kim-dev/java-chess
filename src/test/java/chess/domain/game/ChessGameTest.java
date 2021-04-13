@@ -41,10 +41,9 @@ class ChessGameTest {
     private static final String EMPTY_CELL_STATUS = ".";
 
     @Autowired
-    private DBCleaner dbCleaner;
-
-    @Autowired
     private ChessGame chessGame;
+    @Autowired
+    private DBCleaner dbCleaner;
 
     @AfterEach
     void tearDown() throws SQLException {
