@@ -1,5 +1,5 @@
 
-const HOME = 'http://localhost:4567';
+const HOME = 'http://localhost:8080';
 
 const piece_cells = document.getElementsByClassName("piece-cell");
 

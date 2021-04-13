@@ -19,6 +19,8 @@ import java.util.Map;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
@@ -29,8 +31,8 @@ public class WebController {
     private static final String CHESS_BOARD = "rooms";
     private static final String MOVE = "move";
     private static final String DELETE = "delete";
-    private static final String CHESS_BOARD_VIEW = "chess-board.html";
-    private static final String HOME_VIEW = "index.html";
+    private static final String CHESS_BOARD_VIEW = "chess-board";
+    private static final String HOME_VIEW = "index";
     private static final String RESPONSE_DTO = "responseDTO";
     private static final String APPLICATION_JSON = "application/json";
 
@@ -44,9 +46,6 @@ public class WebController {
 
     public void run() {
         staticFiles.location("/public");
-        handleHomeRequest();
-        handleCreateChessRoomRequest();
-        handleGetChessBoardRequest();
         handleMoveRequest();
         handleDeleteRequest();
     }
@@ -55,7 +54,7 @@ public class WebController {
     public String home(Model model) throws SQLException {
         List<ChessGameResponseDTO> allRoomsIdAndTitle = chessWebService.getAllRoomsIdAndTitle();
         model.addAttribute("allChessGameRooms", allRoomsIdAndTitle);
-        return "index";
+        return HOME_VIEW;
     }
 
     @PostMapping(ROOT + CREATE_CHESS_ROOM)
