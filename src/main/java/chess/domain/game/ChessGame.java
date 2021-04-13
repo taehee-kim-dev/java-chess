@@ -6,7 +6,6 @@ import chess.controller.dto.response.ChessGameResponseDTO;
 import chess.controller.dto.response.GameStatusResponseDTO;
 import chess.dao.entity.ChessGameEntity;
 import chess.dao.entity.GameStatusEntity;
-import chess.dao.game.ChessGameDAO;
 import chess.dao.game.ChessGameRepository;
 import chess.domain.board.Board;
 import chess.domain.board.move.MoveRequest;

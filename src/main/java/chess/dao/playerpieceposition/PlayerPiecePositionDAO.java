@@ -39,8 +39,8 @@ public class PlayerPiecePositionDAO implements PlayerPiecePositionRepository {
         List<Map<String, Object>> maps = jdbcTemplate.queryForList(query, gameId);
         Map<Position, Piece> results = new HashMap<>();
         for (Map<String, Object> gameMap : maps) {
-            Piece piece = Piece.of(((BigInteger)gameMap.get("piece_id")).longValue());
-            Position position = Position.of(((BigInteger)gameMap.get("position_id")).longValue());
+            Piece piece = Piece.of(((BigInteger) gameMap.get("piece_id")).longValue());
+            Position position = Position.of(((BigInteger) gameMap.get("position_id")).longValue());
             results.put(position, piece);
         }
         return results;

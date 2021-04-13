@@ -1,7 +1,6 @@
 package chess.domain.player;
 
 import chess.dao.entity.PiecePositionEntity;
-import chess.dao.player.PlayerDAO;
 import chess.dao.player.PlayerRepository;
 import chess.domain.player.score.ScoreCalculator;
 import chess.domain.player.type.TeamColor;

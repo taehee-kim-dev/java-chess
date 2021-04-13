@@ -4,7 +4,6 @@ package chess.dao.position;
 import chess.domain.position.Position;
 import chess.domain.position.type.File;
 import chess.domain.position.type.Rank;
-import java.sql.SQLException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 

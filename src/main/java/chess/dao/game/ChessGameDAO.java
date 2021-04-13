@@ -22,10 +22,10 @@ public class ChessGameDAO implements ChessGameRepository {
 
     private final RowMapper<ChessGameEntity> ChessGameEntityRowMapper = (resultSet, rowNum) ->
         new ChessGameEntity(
-        resultSet.getLong("id"),
-        resultSet.getString("title"),
-        resultSet.getString("current_turn_team_color")
-    );
+            resultSet.getLong("id"),
+            resultSet.getString("title"),
+            resultSet.getString("current_turn_team_color")
+        );
 
     @Override
     public ChessGameEntity save(ChessGameEntity chessRoomEntity) {
@@ -60,8 +60,8 @@ public class ChessGameDAO implements ChessGameRepository {
             query,
             (resultSet, rowNum) ->
                 new GameStatusEntity(
-                resultSet.getString("title"),
-                resultSet.getString("current_turn_team_color")), gameId);
+                    resultSet.getString("title"),
+                    resultSet.getString("current_turn_team_color")), gameId);
     }
 
     @Override

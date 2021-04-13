@@ -83,7 +83,7 @@ public class ChessConsoleService {
     }
 
     public void endGame() throws Exception {
-        if (!isStarted|| gameId == null) {
+        if (!isStarted || gameId == null) {
             return;
         }
         chessGame.remove(gameId);

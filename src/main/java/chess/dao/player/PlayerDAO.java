@@ -3,6 +3,7 @@ package chess.dao.player;
 
 import chess.domain.player.type.TeamColor;
 import java.sql.SQLException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -24,11 +25,14 @@ public class PlayerDAO implements PlayerRepository {
     @Override
     public Long findIdByGameIdAndTeamColor(Long gameId, TeamColor teamColor) {
         String query = "SELECT id FROM player WHERE chess_game_id = ? AND team_color = ?";
-        return jdbcTemplate.queryForObject(
-            query,
-            Long.class,
-            gameId, teamColor.getValue()
-        );
+        try {
+            return jdbcTemplate.queryForObject(
+                query,
+                Long.class,
+                gameId, teamColor.getValue());
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
     }
 
     @Override
