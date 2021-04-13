@@ -26,7 +26,6 @@ public class PositionsCache {
     private void init() {
         try {
             cachePositions();
-            System.out.println("test");
         } catch (SQLException e) {
             e.printStackTrace();
         }

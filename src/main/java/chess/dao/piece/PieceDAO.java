@@ -8,7 +8,9 @@ import chess.domain.piece.type.PieceType;
 import chess.domain.player.type.TeamColor;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class PieceDAO implements PieceRepository {
 
     @Override

@@ -7,7 +7,6 @@ import static chess.domain.piece.type.PieceType.PAWN;
 import static chess.domain.piece.type.PieceType.QUEEN;
 import static chess.domain.piece.type.PieceType.ROOK;
 
-import chess.dao.piece.PieceDAO;
 import chess.dao.piece.PieceRepository;
 import chess.domain.piece.Piece;
 import chess.domain.piece.type.PieceType;
@@ -16,16 +15,21 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import javax.annotation.PostConstruct;
+import org.springframework.stereotype.Component;
 
+@Component
 public class PiecesCache {
-    private static final PieceRepository PIECE_DAO = new PieceDAO();
+    private final PieceRepository pieceRepository;
     private static final List<Piece> PIECES = new ArrayList<>();
     private static final String PIECE_NOT_FOUND_ERROR_MESSAGE = "존재하지 않는 기물입니다.";
 
-    private PiecesCache() {
+    private PiecesCache(PieceRepository pieceRepository) {
+        this.pieceRepository = pieceRepository;
     }
 
-    static {
+    @PostConstruct
+    private void init() {
         try {
             cachePieces();
         } catch (SQLException e) {
@@ -34,25 +38,24 @@ public class PiecesCache {
         }
     }
 
-    private static void cachePieces() throws SQLException {
+    private void cachePieces() throws SQLException {
         for (TeamColor teamColor : TeamColor.values()) {
             cachePiecesWithColor(teamColor);
         }
     }
 
-    private static void cachePiecesWithColor(TeamColor teamColor) throws SQLException {
+    private void cachePiecesWithColor(TeamColor teamColor) throws SQLException {
         PIECES.addAll(getPiecesWithColorFromDB(teamColor));
     }
 
-    private static List<Piece> getPiecesWithColorFromDB(TeamColor teamColor)
-        throws SQLException {
+    private List<Piece> getPiecesWithColorFromDB(TeamColor teamColor) throws SQLException {
         return Arrays.asList(
-            PIECE_DAO.findByPieceTypeAndTeamColor(PAWN, teamColor),
-            PIECE_DAO.findByPieceTypeAndTeamColor(ROOK, teamColor),
-            PIECE_DAO.findByPieceTypeAndTeamColor(KNIGHT, teamColor),
-            PIECE_DAO.findByPieceTypeAndTeamColor(BISHOP, teamColor),
-            PIECE_DAO.findByPieceTypeAndTeamColor(QUEEN, teamColor),
-            PIECE_DAO.findByPieceTypeAndTeamColor(KING, teamColor));
+            pieceRepository.findByPieceTypeAndTeamColor(PAWN, teamColor),
+            pieceRepository.findByPieceTypeAndTeamColor(ROOK, teamColor),
+            pieceRepository.findByPieceTypeAndTeamColor(KNIGHT, teamColor),
+            pieceRepository.findByPieceTypeAndTeamColor(BISHOP, teamColor),
+            pieceRepository.findByPieceTypeAndTeamColor(QUEEN, teamColor),
+            pieceRepository.findByPieceTypeAndTeamColor(KING, teamColor));
     }
 
 

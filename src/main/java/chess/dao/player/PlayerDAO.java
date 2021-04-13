@@ -5,7 +5,9 @@ import chess.dao.SQLQuery;
 import chess.domain.player.type.TeamColor;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class PlayerDAO implements PlayerRepository {
 
     @Override
